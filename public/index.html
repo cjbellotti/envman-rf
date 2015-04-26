@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Environment Manager</title>
+	<link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<body>
+	<section id="main">
+		
+	</section>
+
+	<section id="modals">
+		
+	</section>
+
+	<script src="libs/jquery/dist/jquery.min.js"></script>
+	<script src="libs/underscore/underscore-min.js"></script>
+	<script src="libs/backbone/backbone.js"></script>
+	<script src="libs/swig.js"></script>
+	<script src="libs/bootstrap/dist/js/bootstrap.min.js"></script>
+
+	<!-- Inicializacion -->
+	<script src="js/init.js"></script>
+
+	<!-- Modelos : Aqui se importan los modelos -->
+	<script src="js/models/job.js"></script>
+	<script src="js/models/sistema.js"></script>
+	<script src="js/models/entidad.js"></script>
+	<script src="js/models/valor-canonico.js"></script>
+	<script src="js/models/valor-sistema.js"></script>
+
+	<!-- Collections : Aqui se importan las colecciones -->
+	<script src="js/collections/jobs.js"></script>
+	<script src="js/collections/sistemas.js"></script>
+	<script src="js/collections/entidades.js"></script>
+	<script src="js/collections/valores-canonicos.js"></script>
+	<script src="js/collections/valores-sistema.js"></script>
+
+	<!-- Vistas : Aqui se importan las vistas -->
+	<script src="js/views/sistema.js"></script>
+	<script src="js/views/entidad.js"></script>
+	<script src="js/views/valor-canonico.js"></script>
+	<script src="js/views/valor-sistema.js"></script>
+
+	<!-- Preparacion -->
+	<script src="js/main.js"></script>
+
+	<script type="text/template" id="sistema-screen-template">
+
+		<div class="modal fade" id="sistema-screen" aria-hidden="true" style="z-index: 1062">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1>Sistema</h1>		
+					</div>
+					<div class="modal-body">
+						<form action="" class="form-horizontal" role="form">
+							<div class="form-group">
+								<label for="nombre" class="col-lg-2 control-label">Nombre</label>
+								<div class="col-lg-10"><input type="text" class="form-control" id="nombre" name="nombre"></div>
+							</div>
+							<div class="form-group">
+								<label for="descripcion" class="col-lg-2 control-label">Descripcion</label>
+								<div class="col-lg-10">
+									<textarea class="form-control" id="descripcion" name="descripcion"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="pais" class="col-lg-2 control-label">Pais</label>
+								<div class="col-lg-10">
+									<input type = "text" class="form-control" id="pais" name="pais"></input>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button id="aceptar" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+						<button id="cancelar" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</script>
+
+	<script type="text/template" id="entidad-screen-template">
+
+		<div class="modal fade" id="entidad-screen" aria-hidden="true" style="z-index: 1062">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1>Entidad</h1>		
+					</div>
+					<div class="modal-body">
+						<div action="" class="form-horizontal" role="form">
+							<div class="form-group">
+								<label for="nombre" class="col-lg-2 control-label">Nombre</label>
+								<div class="col-lg-10"><input type="text" class="form-control" id="nombre" name="nombre"></div>
+							</div>
+							<div class="form-group">
+								<label for="descripcion" class="col-lg-2 control-label">Descripcion</label>
+								<div class="col-lg-10">
+									<textarea class="form-control" id="descripcion" name="descripcion"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button id="aceptar" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+						<button id="cancelar" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</script>
+
+
+	<script type="text/template" id="valor-canonico-screen-template">
+
+		<div class="modal fade" id="valor-canonico-screen" aria-hidden="true" style="z-index: 1062">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1>Valor Canonico</h1>		
+					</div>
+					<div class="modal-body">
+						<div action="" class="form-horizontal" role="form">
+							<div class="form-group">
+								<label for="entidad" class="col-lg-2 control-label">Entidad</label>
+								<div class="col-lg-10">
+									<select id="entidad" name="entidad" class="form-control">
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="valor-canonico" class="col-lg-2 control-label">Valor Canonico</label>
+								<div class="col-lg-10"><input type="text" class="form-control" id="valor-canonico" name="valor-canonico"></div>
+							</div>
+							<div class="form-group">
+								<label for="descripcion" class="col-lg-2 control-label">Descripcion</label>
+								<div class="col-lg-10">
+									<textarea class="form-control" id="descripcion" name="descripcion"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button id="aceptar" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+						<button id="cancelar" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</script>
+
+	<script type="text/template" id="valor-sistema-screen-template">
+
+		<div class="modal fade" id="valor-sistema-screen" aria-hidden="true" style="z-index: 1062">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1>Valor Sistema</h1>		
+					</div>
+					<div class="modal-body">
+						<div action="" class="form-horizontal" role="form">
+							<div class="form-group">
+								<label for="sistema" class="col-lg-2 control-label">Sistema</label>
+								<div class="col-lg-10">
+									<select id="sistema" name="sistema" class="form-control">
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="entidad" class="col-lg-2 control-label">Entidad</label>
+								<div class="col-lg-10">
+									<select id="entidad" name="entidad" class="form-control">
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="valor-canonico" class="col-lg-2 control-label">Valor Canonico</label>
+								<div class="col-lg-10">
+									<select id="valor-canonico" name="valor-canonico" class="form-control">
+										<option>Seleccione una Entidad</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="valor-sistema" class="col-lg-2 control-label">Valor Sistema</label>
+								<div class="col-lg-10"><input type="text" class="form-control" id="valor-sistema" name="valor-sistema"></div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button id="aceptar" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+						<button id="cancelar" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</script>
+
+</body>
+</html>
