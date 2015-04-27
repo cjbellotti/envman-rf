@@ -14,6 +14,7 @@ EnvMan.Views.Sistema = Backbone.View.extend({
 
 	guardar: function () {
 
+		var nuevo = false;
 		var id = this.model.get('ID');
 		if (!id) {
 
@@ -25,13 +26,25 @@ EnvMan.Views.Sistema = Backbone.View.extend({
 
 			this.model.set('ID', id);
 
+			nuevo = true;
+
 		}
 
 		this.model.set('NOMBRE', this.$el.find('#nombre').val());
 		this.model.set('DESCRIPCION', this.$el.find('#descripcion').val());
 		this.model.set('PAIS', this.$el.find('#pais').val());
 
-		window.collections.sistemas.add(this.model);
+		if (nuevo) {
+
+			window.collections.sistemas.add(this.model);
+			generales.agregarRegistroAlJob("sistema", this.model.toJSON());
+
+		} else {
+
+			window.collections.sistemas.set(this.model, {remove : false});
+			generales.modificarRegistroEnJob("sistema", this.model.toJSON());
+
+		}
 
 	},
 
