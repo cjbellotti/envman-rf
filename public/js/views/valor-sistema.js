@@ -19,6 +19,7 @@ EnvMan.Views.ValorSistema = Backbone.View.extend({
 
 	guardar: function () {
 
+		var nuevo = false;
 		var id = this.model.get('ID');
 		if (!id) {
 
@@ -30,14 +31,25 @@ EnvMan.Views.ValorSistema = Backbone.View.extend({
 
 			this.model.set('ID', id);
 
+			nuevo = true;
+
 		}
 
-		this.model.set('ID_SISTEMA', this.$el.find('#sistema').val());
-		this.model.set('ID_ENTIDAD_CANONICA', this.$el.find('#entidad').val());
-		this.model.set('VALOR_CANONICO', this.$el.find('#valor-canonico').val());
-		this.model.set('DESCRIPCION', this.$el.find('#descripcion').val());
+		this.model.set('ID_SISTEMA', parseInt(this.$el.find('#sistema').val()));
+		this.model.set('ID_ENTIDAD_CANONICA', parseInt(this.$el.find('#entidad').val()));
+		this.model.set('VALOR_CANONICO', parseInt(this.$el.find('#valor-canonico').val()));
+		this.model.set('DESCRIPCION', this.$el.find('#descripcion').val() || "");
+		this.model.set('VALOR_SISTEMA', this.$el.find('#valor-sistema').val() || "")
 
-		window.collections.valoresSistema.add(this.model);
+		if (nuevo) {
+
+			window.collections.valoresSistema.add(this.model);
+			generales.agregarValorSistemaAJob(this.model.toJSON());
+
+		} else {
+			window.collections.valoresSistema.set(this.model, {remove : false});
+			generales.modificarValorSistemaEnJob(this.model.toJSON());
+		}
 
 	},
 
@@ -75,12 +87,22 @@ EnvMan.Views.ValorSistema = Backbone.View.extend({
 
 		if (data['ID_ENTIDAD_CANONICA']) {
 
-			this.$el.find('#sistema').val(data['ID_ENTIDAD_CANONICA']);
+			this.$el.find('#entidad').val(data['ID_ENTIDAD_CANONICA']);
 
 			if (data['VALOR_CANONICO']) {
 			
-				cargarComboValorCanonico(data['ID_ENTIDAD_CANONICA']);
-				this.$el.find('#sistema').val(data['VALOR_CANONICO']);				
+				this.cargarComboValorCanonico(data['ID_ENTIDAD_CANONICA']);
+				this.$el.find('#valor-canonico').val(data['VALOR_CANONICO']);				
+
+			}
+
+		} else {
+
+			var idEntidad = this.$el.find('#entidad').val();
+
+			if (idEntidad > "") {
+
+				this.cargarComboValorCanonico(idEntidad);
 
 			}
 
@@ -90,7 +112,7 @@ EnvMan.Views.ValorSistema = Backbone.View.extend({
 
 	cargarComboValorCanonico : function () {
 
-		var idEntidad = this.$el.find('#entidad').val();
+		var idEntidad = parseInt(this.$el.find('#entidad').val());
 
 		var valores = window.collections.valoresCanonicos.where({
 

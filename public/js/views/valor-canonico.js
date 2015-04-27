@@ -16,6 +16,7 @@ EnvMan.Views.ValorCanonico = Backbone.View.extend({
 
 	guardar: function () {
 
+		var nuevo = false;
 		var id = this.model.get('ID');
 		if (!id) {
 
@@ -26,14 +27,24 @@ EnvMan.Views.ValorCanonico = Backbone.View.extend({
 			}
 
 			this.model.set('ID', id);
+			nuevo = true;
 
 		}
 
-		this.model.set('ID_ENTIDAD_CANONICA', this.$el.find('#entidad').val())
+		this.model.set('ID_ENTIDAD_CANONICA', parseInt(this.$el.find('#entidad').val()));
 		this.model.set('VALOR_CANONICO', this.$el.find('#valor-canonico').val());
 		this.model.set('DESCRIPCION', this.$el.find('#descripcion').val());
 
-		window.collections.valoresCanonicos.add(this.model);
+		if (nuevo) {
+
+			window.collections.valoresCanonicos.add(this.model);
+			generales.agregarValorCanonicoAJob(this.model.toJSON());
+
+		} else {
+
+			window.collections.valoresCanonicos.set(this.model, { remove : false});
+			generales.modificarValorCanonicoEnJob(this.model.toJSON());
+		}
 
 	},
 
@@ -59,6 +70,10 @@ EnvMan.Views.ValorCanonico = Backbone.View.extend({
 			self.renderItemComboEntidad(entidad);
 
 		});
+
+		if (data['ID_ENTIDAD_CANONICA']) {
+			this.$el.find('#entidad').val(data['ID_ENTIDAD_CANONICA']);
+		}
 
 	},
 

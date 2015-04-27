@@ -14,6 +14,7 @@ EnvMan.Views.Entidad = Backbone.View.extend({
 
 	guardar: function () {
 
+		var nuevo = false;
 		var id = this.model.get('ID');
 		if (!id) {
 
@@ -24,13 +25,21 @@ EnvMan.Views.Entidad = Backbone.View.extend({
 			}
 
 			this.model.set('ID', id);
-
+			nuevo = true;
 		}
 
 		this.model.set('NOMBRE', this.$el.find('#nombre').val());
 		this.model.set('DESCRIPCION', this.$el.find('#descripcion').val());
 
 		window.collections.entidades.add(this.model);
+
+		if (nuevo) {
+			window.collections.entidades.add(this.model);
+			generales.agregarRegistroAlJob("entidadcanonica", this.model.toJSON());
+		} else {
+			window.collections.entidades.set(this.model, { remove : false });
+			generales.modificarRegistroEnJob("entidadcanonica", this.model.toJSON());
+		}
 
 	},
 
